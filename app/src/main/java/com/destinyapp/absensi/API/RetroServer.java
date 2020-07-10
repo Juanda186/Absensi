@@ -7,7 +7,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetroServer {
-    private static final String base_url = "http://192.168.0.17/kreditcepat/api/Absensi/";
+    private static final String base_url = "http://kreditcepat.destinyconsultant.tech/api/Absensi/";
     private static Retrofit retrofit;
 
     public static Retrofit getClient(){

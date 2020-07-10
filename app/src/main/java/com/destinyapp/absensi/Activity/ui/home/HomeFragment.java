@@ -15,8 +15,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.destinyapp.absensi.Activity.AbsenActivity;
 import com.destinyapp.absensi.Activity.DataAbsensiActivity;
 import com.destinyapp.absensi.Activity.DataKaryawanActivity;
+import com.destinyapp.absensi.Activity.TambahKaryawan;
 import com.destinyapp.absensi.Model.Method;
 import com.destinyapp.absensi.R;
 import com.destinyapp.absensi.SharedPreferance.DB_Helper;
@@ -31,7 +33,7 @@ public class HomeFragment extends Fragment {
     TextView tvHeader,tvTgl;
     DB_Helper dbHelper;
     String username,nama,divisi,level;
-    LinearLayout Karyawan,DataAbsensi,Absensi;
+    LinearLayout Karyawan,DataAbsensi,Absensi,Tambah;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
@@ -93,6 +95,7 @@ public class HomeFragment extends Fragment {
         Absensi = view.findViewById(R.id.linearAbsensi);
         DataAbsensi = view.findViewById(R.id.linearDataAbsensi);
         Karyawan = view.findViewById(R.id.linearKaryawan);
+        Tambah = view.findViewById(R.id.linearTambah);
         Method method = new Method();
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Date date = new Date();
@@ -102,9 +105,8 @@ public class HomeFragment extends Fragment {
         Absensi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "Klik Absensi", Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent(getActivity(), .class);
-//                startActivity(intent);
+                Intent intent = new Intent(getActivity(), AbsenActivity.class);
+                startActivity(intent);
             }
         });
         DataAbsensi.setOnClickListener(new View.OnClickListener() {
@@ -118,6 +120,13 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), DataKaryawanActivity.class);
+                startActivity(intent);
+            }
+        });
+        Tambah.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), TambahKaryawan.class);
                 startActivity(intent);
             }
         });

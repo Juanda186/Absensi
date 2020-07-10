@@ -75,12 +75,13 @@ public class AdapterDataAbsensi extends RecyclerView.Adapter<AdapterDataAbsensi.
     private void Checker(final TextView status, String username){
         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
         Call<ResponseModel> Log = api.CheckAbsen(username,thisday);
+        Toast.makeText(ctx, thisday, Toast.LENGTH_SHORT).show();
         Log.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
                 try {
                     if (response.body().getStatus().equals("success")){
-                        status.setText("Masuk");
+                        status.setText(response.body().getData().get(0).status);
                     }else{
                         status.setText("Tanpa Keterangan");
                     }

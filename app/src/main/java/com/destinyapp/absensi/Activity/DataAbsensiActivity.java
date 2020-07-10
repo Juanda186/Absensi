@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -89,7 +90,7 @@ public class DataAbsensiActivity extends AppCompatActivity {
     private void MainLogic(){
         loops = loops+1;
         if (loops >= 3){
-            String Today = tahun+"-"+bulan+"-"+tahun;
+            String Today = tahun.getSelectedItem().toString()+"-"+bulan.getSelectedItem().toString()+"-"+tanggal.getSelectedItem().toString();
             Logic(Today);
         }
     }
@@ -119,5 +120,12 @@ public class DataAbsensiActivity extends AppCompatActivity {
                 Toast.makeText(DataAbsensiActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(DataAbsensiActivity.this,MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

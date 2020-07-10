@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class DataModel {
+    //Karyawan
     @SerializedName("id_karyawan")
     @Expose
     public String id_karyawan;
@@ -27,6 +28,19 @@ public class DataModel {
     @SerializedName("level")
     @Expose
     public String level;
+
+    //Absen
+    @SerializedName("id_absensi")
+    @Expose
+    public String id_absensi;
+
+    @SerializedName("status")
+    @Expose
+    public String status;
+
+    @SerializedName("tanggal")
+    @Expose
+    public String tanggal;
 
     public String getId_karyawan() {
         return id_karyawan;
@@ -74,5 +88,29 @@ public class DataModel {
 
     public void setLevel(String level) {
         this.level = level;
+    }
+
+    public String getId_absensi() {
+        return id_absensi;
+    }
+
+    public void setId_absensi(String id_absensi) {
+        this.id_absensi = id_absensi;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getTanggal() {
+        return tanggal;
+    }
+
+    public void setTanggal(String tanggal) {
+        this.tanggal = tanggal;
     }
 }

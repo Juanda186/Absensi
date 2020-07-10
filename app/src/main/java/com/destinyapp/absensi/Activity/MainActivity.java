@@ -1,5 +1,6 @@
 package com.destinyapp.absensi.Activity;
 
+import android.Manifest;
 import android.os.Bundle;
 
 import com.destinyapp.absensi.R;
@@ -11,8 +12,10 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-public class MainActivity extends AppCompatActivity {
+import pub.devrel.easypermissions.EasyPermissions;
 
+public class MainActivity extends AppCompatActivity {
+    private String[] galleryPermissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +29,12 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 //        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+        if (EasyPermissions.hasPermissions(MainActivity.this, galleryPermissions)) {
+
+        } else {
+            EasyPermissions.requestPermissions(MainActivity.this, "Access for storage",
+                    101, galleryPermissions);
+        }
     }
 
 }

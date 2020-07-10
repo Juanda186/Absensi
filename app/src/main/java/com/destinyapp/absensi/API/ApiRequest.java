@@ -23,6 +23,25 @@ public interface ApiRequest {
                               @Field("tanggal") String tanggal);
 
     @FormUrlEncoded
+    @POST("Insertabsen")
+    Call<ResponseModel> InsertAbsen(@Field("id_karyawan") String id_karyawan,
+                                   @Field("status") String status,
+                                   @Field("tanggal") String tanggal);
+
+    @FormUrlEncoded
+    @POST("Editabsen")
+    Call<ResponseModel> UpdateAbsen(@Field("id_absensi") String id_absensi,
+                                   @Field("status") String status);
+
+    @FormUrlEncoded
+    @POST("Insertkaryawan")
+    Call<ResponseModel> InsertKaryawan(@Field("username") String username,
+                                       @Field("password") String password,
+                                       @Field("nama_karyawan") String nama_karyawan,
+                                       @Field("divisi") String divisi);
+
+
+    @FormUrlEncoded
     @POST("Checkemail")
     Call<ResponseModel> CheckEmail(@Field("email") String email);
 

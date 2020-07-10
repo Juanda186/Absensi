@@ -3,6 +3,7 @@
     package="com.destinyapp.absensi">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -12,11 +13,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.DataKaryawanActivity"
-            android:parentActivityName=".Activity.MainActivity">
-
-        </activity>
-        <activity android:name=".Activity.DataAbsensiActivity" />
+        <activity android:name=".Activity.TambahKaryawan"></activity>
+        <activity
+            android:name=".Activity.AbsensiActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppThemeNoAction" />
+        <activity
+            android:name=".Activity.AbsenActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppThemeNoAction" />
+        <activity
+            android:name=".Activity.DataKaryawanActivity"
+            android:parentActivityName=".Activity.MainActivity" />
+        <activity
+            android:name=".Activity.DataAbsensiActivity"
+            android:parentActivityName=".Activity.MainActivity" />
         <activity
             android:name=".Activity.RegisterActivity"
             android:theme="@style/AppThemeNoAction" />
@@ -26,6 +37,7 @@
         <activity
             android:name=".Activity.MainActivity"
             android:label="@string/title_activity_main"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoAction" />
         <activity
             android:name=".Activity.SplashActivity"

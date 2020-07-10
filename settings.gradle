@@ -1,2 +1,3 @@
 rootProject.name='Absensi'
 include ':app'
+include ':openCVLibrary343'
