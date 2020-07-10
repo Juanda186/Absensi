@@ -62,17 +62,10 @@ public class AbsenActivity extends AppCompatActivity implements CameraBridgeView
     File caseFile;
     CascadeClassifier faceDetector;
     private Mat mRgba,mGrey;
-    String Response,Status,IdAbsensi,Tanggal;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_absen);
-
-        Intent data = getIntent();
-        Response = data.getStringExtra("RESPONSE");
-        Status = data.getStringExtra("STATUS");
-        IdAbsensi = data.getStringExtra("ID_ABSENSI");
-        Tanggal = data.getStringExtra("TANGGAL");
         //Request Permission
         Dexter.withActivity(this)
                 .withPermission(Manifest.permission.CAMERA)
@@ -134,11 +127,7 @@ public class AbsenActivity extends AppCompatActivity implements CameraBridgeView
         MatOfRect faceDetection = new MatOfRect();
         faceDetector.detectMultiScale(mRgba,faceDetection);
         if (faceDetection.toArray().length > 0){
-            if (Response.equals("INSERT")){
-                Input(IdAbsensi,Status,Tanggal);
-            }else{
-                Edit(IdAbsensi,Status);
-            }
+            ChangeActivity();
             int i=0;
             for (Rect rect: faceDetection.toArray()){
 //            Toast.makeText(this, faceDetection.toString(), Toast.LENGTH_SHORT).show();
@@ -205,57 +194,6 @@ public class AbsenActivity extends AppCompatActivity implements CameraBridgeView
         Intent intent = new Intent(AbsenActivity.this,MainActivity.class);
         startActivity(intent);
         finish();
-    }
-
-    private void Edit(String id,String status){
-        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
-        Call<ResponseModel> Log = api.UpdateAbsen(id,status);
-        Log.enqueue(new Callback<ResponseModel>() {
-            @Override
-            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
-                try {
-                    if (response.body().getStatus().equals("success")){
-                        Toast.makeText(AbsenActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                        ChangeActivity();
-                    }else{
-                        Toast.makeText(AbsenActivity.this, "Terjadi kesalahan "+response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }catch (Exception e){
-                    e.printStackTrace();
-                    Toast.makeText(AbsenActivity.this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseModel> call, Throwable t) {
-                Toast.makeText(AbsenActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-    private void Input(String id,String status,String tanggal){
-        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
-        Call<ResponseModel> Log = api.InsertAbsen(id,status,tanggal);
-        Log.enqueue(new Callback<ResponseModel>() {
-            @Override
-            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
-                try {
-                    if (response.body().getStatus().equals("success")){
-                        Toast.makeText(AbsenActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                        ChangeActivity();
-                    }else{
-                        Toast.makeText(AbsenActivity.this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
-                    }
-                }catch (Exception e){
-                    e.printStackTrace();
-                    Toast.makeText(AbsenActivity.this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseModel> call, Throwable t) {
-                Toast.makeText(AbsenActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     private void ChangeActivity(){

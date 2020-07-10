@@ -32,7 +32,7 @@ public class TambahKaryawan extends AppCompatActivity {
         password = findViewById(R.id.etPassword);
         nama = findViewById(R.id.etNama);
         divisi = findViewById(R.id.spinnerDivisi);
-        tambah = findViewById(R.id.btnTambah);
+        tambah = findViewById(R.id.linearTambah);
 
         tambah.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,12 +40,7 @@ public class TambahKaryawan extends AppCompatActivity {
                 if (!Chekers().equals("DONE")){
                     Toast.makeText(TambahKaryawan.this, Chekers(), Toast.LENGTH_SHORT).show();
                 }else{
-                    Intent goInput = new Intent(TambahKaryawan.this, TambahActivity.class);
-                    goInput.putExtra("USERNAME",username.getText().toString());
-                    goInput.putExtra("PASSWORD",password.getText().toString());
-                    goInput.putExtra("NAMA",nama.getText().toString());
-                    goInput.putExtra("DIVISI",divisi.getSelectedItem().toString());
-                    startActivities(new Intent[]{goInput});
+                    Logic();
                 }
             }
         });
@@ -78,12 +73,11 @@ public class TambahKaryawan extends AppCompatActivity {
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
                 try {
                     if (response.body().getStatus().equals("success")){
-                        Toast.makeText(TambahKaryawan.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(TambahKaryawan.this,DataKaryawanActivity.class);
+                        Intent intent = new Intent(TambahKaryawan.this,TambahActivity.class);
                         startActivity(intent);
                         finish();
                     }else{
-                        Toast.makeText(TambahKaryawan.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(TambahKaryawan.this, "Pembuatan karyawan Gagal", Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception e){
                     e.printStackTrace();
