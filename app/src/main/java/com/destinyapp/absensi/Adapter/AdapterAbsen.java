@@ -178,7 +178,6 @@ public class AdapterAbsen extends RecyclerView.Adapter<AdapterAbsen.HolderData> 
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
                 try {
                     if (response.body().getStatus().equals("success")){
-                        Toast.makeText(ctx, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                         ChangeActivity();
                     }else{
                         Toast.makeText(ctx, "Terjadi kesalahan "+response.body().getMessage(), Toast.LENGTH_SHORT).show();
@@ -203,7 +202,6 @@ public class AdapterAbsen extends RecyclerView.Adapter<AdapterAbsen.HolderData> 
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
                 try {
                     if (response.body().getStatus().equals("success")){
-                        Toast.makeText(ctx, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                         ChangeActivity();
                     }else{
                         Toast.makeText(ctx, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();

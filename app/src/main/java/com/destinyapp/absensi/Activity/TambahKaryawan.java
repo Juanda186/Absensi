@@ -32,7 +32,7 @@ public class TambahKaryawan extends AppCompatActivity {
         password = findViewById(R.id.etPassword);
         nama = findViewById(R.id.etNama);
         divisi = findViewById(R.id.spinnerDivisi);
-        tambah = findViewById(R.id.linearTambah);
+        tambah = findViewById(R.id.btnTambah);
 
         tambah.setOnClickListener(new View.OnClickListener() {
             @Override
