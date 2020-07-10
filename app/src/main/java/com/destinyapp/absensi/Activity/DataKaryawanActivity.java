@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -63,5 +64,12 @@ public class DataKaryawanActivity extends AppCompatActivity {
                 Toast.makeText(DataKaryawanActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(DataKaryawanActivity.this,MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
