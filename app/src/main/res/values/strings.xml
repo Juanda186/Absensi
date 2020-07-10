@@ -2,8 +2,8 @@
     <string name="app_name">Absensi</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_dashboard">About</string>
+    <string name="title_notifications">User</string>
     <string-array name="tanggal">
         <item>01</item>
         <item>02</item>

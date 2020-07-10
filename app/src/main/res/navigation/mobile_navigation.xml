@@ -13,13 +13,13 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.destinyapp.absensi.Activity.ui.dashboard.DashboardFragment"
+        android:name="com.destinyapp.absensi.Activity.ui.about.AboutFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_about" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.destinyapp.absensi.Activity.ui.notifications.NotificationsFragment"
+        android:name="com.destinyapp.absensi.Activity.ui.user.UserFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_user" />
 </navigation>
