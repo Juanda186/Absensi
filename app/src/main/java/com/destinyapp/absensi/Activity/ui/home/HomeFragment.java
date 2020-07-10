@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.destinyapp.absensi.Activity.AbsenActivity;
+import com.destinyapp.absensi.Activity.AbsensiActivity;
 import com.destinyapp.absensi.Activity.DataAbsensiActivity;
 import com.destinyapp.absensi.Activity.DataKaryawanActivity;
 import com.destinyapp.absensi.Activity.TambahKaryawan;
@@ -105,7 +106,7 @@ public class HomeFragment extends Fragment {
         Absensi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), AbsenActivity.class);
+                Intent intent = new Intent(getActivity(), AbsensiActivity.class);
                 startActivity(intent);
             }
         });
