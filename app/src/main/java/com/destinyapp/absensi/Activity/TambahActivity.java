@@ -120,9 +120,12 @@ public class TambahActivity extends AppCompatActivity implements CameraBridgeVie
         MatOfRect faceDetection = new MatOfRect();
         faceDetector.detectMultiScale(mRgba,faceDetection);
         if (faceDetection.toArray().length > 0){
-            Logic(Username,Password,Nama,Divisi);
+//            Logic(Username,Password,Nama,Divisi);
             int i=0;
-            Toast.makeText(this, "Penambahan Karyawan berhasil Ditambahkan", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Penambahan Karyawan berhasil Ditambahkan", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(TambahActivity.this,DataKaryawanActivity.class);
+            startActivity(intent);
+            finish();
             for (Rect rect: faceDetection.toArray()){
 //            Toast.makeText(this, faceDetection.toString(), Toast.LENGTH_SHORT).show();
 

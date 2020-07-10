@@ -128,7 +128,6 @@ public class AbsenActivity extends AppCompatActivity implements CameraBridgeView
         faceDetector.detectMultiScale(mRgba,faceDetection);
         if (faceDetection.toArray().length > 0){
             ChangeActivity();
-            Toast.makeText(this, "Data Absensi berhasil diubah", Toast.LENGTH_SHORT).show();
             int i=0;
             for (Rect rect: faceDetection.toArray()){
 //            Toast.makeText(this, faceDetection.toString(), Toast.LENGTH_SHORT).show();
