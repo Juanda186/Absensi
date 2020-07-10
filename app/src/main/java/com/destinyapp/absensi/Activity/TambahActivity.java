@@ -170,4 +170,11 @@ public class TambahActivity extends AppCompatActivity implements CameraBridgeVie
             }
         }
     };
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(TambahActivity.this,MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

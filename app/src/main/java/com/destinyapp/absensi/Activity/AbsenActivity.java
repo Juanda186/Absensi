@@ -191,5 +191,10 @@ public class AbsenActivity extends AppCompatActivity implements CameraBridgeView
         }
     };
 
-
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(AbsenActivity.this,MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }
