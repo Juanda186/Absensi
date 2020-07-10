@@ -40,7 +40,12 @@ public class TambahKaryawan extends AppCompatActivity {
                 if (!Chekers().equals("DONE")){
                     Toast.makeText(TambahKaryawan.this, Chekers(), Toast.LENGTH_SHORT).show();
                 }else{
-                    Logic();
+                    Intent goInput = new Intent(TambahKaryawan.this, TambahActivity.class);
+                    goInput.putExtra("USERNAME",username.getText().toString());
+                    goInput.putExtra("PASSWORD",password.getText().toString());
+                    goInput.putExtra("NAMA",nama.getText().toString());
+                    goInput.putExtra("DIVISI",divisi.getSelectedItem().toString());
+                    startActivities(new Intent[]{goInput});
                 }
             }
         });

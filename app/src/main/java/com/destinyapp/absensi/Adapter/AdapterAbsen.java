@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.destinyapp.absensi.API.ApiRequest;
 import com.destinyapp.absensi.API.RetroServer;
+import com.destinyapp.absensi.Activity.AbsenActivity;
 import com.destinyapp.absensi.Activity.DataAbsensiActivity;
 import com.destinyapp.absensi.Model.Method;
 import com.destinyapp.absensi.Model.Response.DataModel;
@@ -106,7 +107,12 @@ public class AdapterAbsen extends RecyclerView.Adapter<AdapterAbsen.HolderData> 
                             @Override
                             public void onClick(View view) {
                                 if (!response.body().getData().get(0).status.equals("Masuk")){
-                                    Edit(response.body().getData().get(0).getId_absensi(),"Masuk");
+                                    Intent goInput = new Intent(ctx, AbsenActivity.class);
+                                    goInput.putExtra("RESPONSE","EDIT");
+                                    goInput.putExtra("STATUS","Masuk");
+                                    goInput.putExtra("ID_ABSENSI",response.body().getData().get(0).id_absensi);
+                                    goInput.putExtra("TANGGAL",tanggal);
+                                    ctx.startActivities(new Intent[]{goInput});
                                 }
                             }
                         });
@@ -114,7 +120,12 @@ public class AdapterAbsen extends RecyclerView.Adapter<AdapterAbsen.HolderData> 
                             @Override
                             public void onClick(View view) {
                                 if (!response.body().getData().get(0).status.equals("Izin")){
-                                    Edit(response.body().getData().get(0).getId_absensi(),"Izin");
+                                    Intent goInput = new Intent(ctx, AbsenActivity.class);
+                                    goInput.putExtra("RESPONSE","EDIT");
+                                    goInput.putExtra("STATUS","Izin");
+                                    goInput.putExtra("ID_ABSENSI",response.body().getData().get(0).id_absensi);
+                                    goInput.putExtra("TANGGAL",tanggal);
+                                    ctx.startActivities(new Intent[]{goInput});
                                 }
                             }
                         });
@@ -122,7 +133,12 @@ public class AdapterAbsen extends RecyclerView.Adapter<AdapterAbsen.HolderData> 
                             @Override
                             public void onClick(View view) {
                                 if (!response.body().getData().get(0).status.equals("Tanpa Keterangan")){
-                                    Edit(response.body().getData().get(0).getId_absensi(),"Tanpa Keterangan");
+                                    Intent goInput = new Intent(ctx, AbsenActivity.class);
+                                    goInput.putExtra("RESPONSE","EDIT");
+                                    goInput.putExtra("STATUS","Tanpa Keterangan");
+                                    goInput.putExtra("ID_ABSENSI",response.body().getData().get(0).id_absensi);
+                                    goInput.putExtra("TANGGAL",tanggal);
+                                    ctx.startActivities(new Intent[]{goInput});
                                 }
                             }
                         });
@@ -132,7 +148,12 @@ public class AdapterAbsen extends RecyclerView.Adapter<AdapterAbsen.HolderData> 
                             public void onClick(View view) {
                                 Default(masuk,izin,alpa);
                                 masuk.setBackgroundResource(R.drawable.button_rounded_succes);
-                                Input(id,"Masuk");
+                                Intent goInput = new Intent(ctx, AbsenActivity.class);
+                                goInput.putExtra("RESPONSE","INPUT");
+                                goInput.putExtra("STATUS","Masuk");
+                                goInput.putExtra("ID_ABSENSI",response.body().getData().get(0).id_absensi);
+                                goInput.putExtra("TANGGAL",tanggal);
+                                ctx.startActivities(new Intent[]{goInput});
                             }
                         });
                         izin.setOnClickListener(new View.OnClickListener() {
@@ -140,7 +161,12 @@ public class AdapterAbsen extends RecyclerView.Adapter<AdapterAbsen.HolderData> 
                             public void onClick(View view) {
                                 Default(masuk,izin,alpa);
                                 izin.setBackgroundResource(R.drawable.button_rounded_succes);
-                                Input(id,"Izin");
+                                Intent goInput = new Intent(ctx, AbsenActivity.class);
+                                goInput.putExtra("RESPONSE","INPUT");
+                                goInput.putExtra("STATUS","Izin");
+                                goInput.putExtra("ID_ABSENSI",response.body().getData().get(0).id_absensi);
+                                goInput.putExtra("TANGGAL",tanggal);
+                                ctx.startActivities(new Intent[]{goInput});
                             }
                         });
                         alpa.setOnClickListener(new View.OnClickListener() {
@@ -148,7 +174,12 @@ public class AdapterAbsen extends RecyclerView.Adapter<AdapterAbsen.HolderData> 
                             public void onClick(View view) {
                                 Default(masuk,izin,alpa);
                                 alpa.setBackgroundResource(R.drawable.button_rounded_succes);
-                                Input(id,"Tanpa Keterangan");
+                                Intent goInput = new Intent(ctx, AbsenActivity.class);
+                                goInput.putExtra("RESPONSE","INPUT");
+                                goInput.putExtra("STATUS","Tanpa Keterangan");
+                                goInput.putExtra("ID_ABSENSI",response.body().getData().get(0).id_absensi);
+                                goInput.putExtra("TANGGAL",tanggal);
+                                ctx.startActivities(new Intent[]{goInput});
                             }
                         });
                     }
@@ -164,62 +195,8 @@ public class AdapterAbsen extends RecyclerView.Adapter<AdapterAbsen.HolderData> 
             }
         });
     }
-    private void ChangeActivity(){
-        Intent intent = new Intent(ctx, DataAbsensiActivity.class);
-        ctx.startActivity(intent);
-        ((Activity) ctx).finish();
-    }
-    private void Edit(String id,String status){
-        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
-        Call<ResponseModel> Log = api.UpdateAbsen(id,status);
-        Log.enqueue(new Callback<ResponseModel>() {
-            @Override
-            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
-                try {
-                    if (response.body().getStatus().equals("success")){
-                        Toast.makeText(ctx, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                        ChangeActivity();
-                    }else{
-                        Toast.makeText(ctx, "Terjadi kesalahan "+response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }catch (Exception e){
-                    e.printStackTrace();
-                    Toast.makeText(ctx, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
-                }
-            }
 
-            @Override
-            public void onFailure(Call<ResponseModel> call, Throwable t) {
-                Toast.makeText(ctx, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-    private void Input(String id,String status){
-        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
-        Call<ResponseModel> Log = api.InsertAbsen(id,status,tanggal);
-        Log.enqueue(new Callback<ResponseModel>() {
-            @Override
-            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
-                try {
-                    if (response.body().getStatus().equals("success")){
-                        Toast.makeText(ctx, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                        ChangeActivity();
-                    }else{
-                        Toast.makeText(ctx, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
-                    }
-                }catch (Exception e){
-                    e.printStackTrace();
-                    Toast.makeText(ctx, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
-                }
-            }
 
-            @Override
-            public void onFailure(Call<ResponseModel> call, Throwable t) {
-                Toast.makeText(ctx, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
     private void Default(final LinearLayout masuk, final LinearLayout izin, final LinearLayout alpa){
         masuk.setBackgroundResource(R.drawable.button_rounded_primary);
         izin.setBackgroundResource(R.drawable.button_rounded_primary);

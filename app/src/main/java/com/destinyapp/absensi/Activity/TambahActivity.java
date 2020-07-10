@@ -4,11 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.destinyapp.absensi.API.ApiRequest;
+import com.destinyapp.absensi.API.RetroServer;
+import com.destinyapp.absensi.Model.ResponseModel;
 import com.destinyapp.absensi.R;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
@@ -36,17 +40,26 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class TambahActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
     JavaCameraView javaCameraView;
     File caseFile;
     CascadeClassifier faceDetector;
     private Mat mRgba,mGrey;
     Dialog myDialog;
+    String Username,Password,Nama,Divisi;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tambah);
-
+        Intent data = getIntent();
+        Username = data.getStringExtra("USERNAME");
+        Password = data.getStringExtra("PASSWORD");
+        Nama = data.getStringExtra("NAMA");
+        Divisi = data.getStringExtra("DIVISI");
         //Request Permission
         Dexter.withActivity(this)
                 .withPermission(Manifest.permission.CAMERA)
@@ -107,8 +120,7 @@ public class TambahActivity extends AppCompatActivity implements CameraBridgeVie
         MatOfRect faceDetection = new MatOfRect();
         faceDetector.detectMultiScale(mRgba,faceDetection);
         if (faceDetection.toArray().length > 0){
-            Intent intent = new Intent(TambahActivity.this,MainActivity.class);
-            startActivity(intent);
+            Logic(Username,Password,Nama,Divisi);
             int i=0;
             Toast.makeText(this, "Penambahan Karyawan berhasil Ditambahkan", Toast.LENGTH_SHORT).show();
             for (Rect rect: faceDetection.toArray()){
@@ -176,5 +188,42 @@ public class TambahActivity extends AppCompatActivity implements CameraBridgeVie
         Intent intent = new Intent(TambahActivity.this,MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void Logic(String username,String password,String nama,String divisi){
+        final ProgressDialog pd = new ProgressDialog(this);
+        pd.setMessage("Sedang Mencoba Menambahkan Data Karyawan");
+        pd.setCancelable(false);
+        pd.show();
+
+        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+        Call<ResponseModel> log = api.InsertKaryawan(
+                username,
+                password,
+                nama,
+                divisi);
+        log.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                try {
+                    if (response.body().getStatus().equals("success")){
+                        Toast.makeText(TambahActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(TambahActivity.this,DataKaryawanActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }else{
+                        Toast.makeText(TambahActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Toast.makeText(TambahActivity.this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                Toast.makeText(TambahActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
